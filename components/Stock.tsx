@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import config from "../config/config.json";
+import { Typography } from "../styles";
 
 interface ISpecifier {
   [key: string]: any;
@@ -34,7 +35,7 @@ function StockList() {
 export default function Stock() {
   return (
     <View>
-      <Text style={{fontSize: 24, color: "#fff"}}>Lagerförteckning</Text>
+      <Text style={Typography.paragraphBasic}>Lagerförteckning</Text>
       <StockList></StockList>
     </View>
   );
