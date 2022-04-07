@@ -1,9 +1,15 @@
-import { Text, View } from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { IOrder } from '../interfaces/orders';
+import OrderList from './OrderList';
+import PickList from './PickList';
+const Stack = createNativeStackNavigator();
 
-export default function Pick() {
+export default function Pick({refreshInventory}:
+  {refreshInventory: any}) {
     return (
-        <View>
-            <Text>Plocklista</Text>
-        </View>
+        <Stack.Navigator initialRouteName='List'>
+          <Stack.Screen name='List' component={OrderList} initialParams={{refreshInventory: refreshInventory}} />
+          <Stack.Screen name='Details' component={PickList} />
+        </Stack.Navigator>
     );
 }

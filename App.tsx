@@ -8,18 +8,29 @@ import Home from "./components/Home";
 import Pick from "./components/Pick";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { DarkTheme } from 'react-native-paper';
-
+import { useEffect, useState } from 'react';
+import { IProduct } from './interfaces/products';
+import productModel from './models/product';
 const Tab = createBottomTabNavigator();
 
 interface IStringByString {
   [key: string]: string;
 }
+
 const iconNames: IStringByString = {
   "Lager": "home",
   "Plock": "list"
 }
 
 export default function App() {
+  const [products, setProducts] = useState<IProduct[]>([]);
+  const refreshInventory = async () => {
+    const p = await productModel.getProducts();
+    setProducts(p);
+  }
+  useEffect(() => {
+    refreshInventory();
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <NavigationContainer theme={DarkTheme as any}>
@@ -34,8 +45,8 @@ export default function App() {
           tabBarInactiveBackgroundColor: Colors.darkBackgroundColor.backgroundColor,
           tabBarStyle: styles.navigation
         })}>
-          <Tab.Screen name="Lager" component={Home} />
-          <Tab.Screen name="Plock" component={Pick} />
+          <Tab.Screen name="Lager" children={ () => <Home refreshInventory={refreshInventory} products={products}/> } />
+          <Tab.Screen name="Plock" children={ () => <Pick refreshInventory={refreshInventory}/> } />
         </Tab.Navigator>
       </NavigationContainer>
       <StatusBar style="auto"></StatusBar>

@@ -21,3 +21,7 @@ export const lightBackgroundColor = {
 export const primaryAccentColor = {
     backgroundColor: "#6931e0"
 }
+
+export const secondaryAccentColor = {
+    backgroundColor: "#511DC1"
+}

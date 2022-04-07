@@ -6,7 +6,7 @@ export const mainHeading = {
 }
 
 export const subHeading = {
-    fontSize: 24,
+    fontSize: 28,
     ...lightFontColor
 }
 

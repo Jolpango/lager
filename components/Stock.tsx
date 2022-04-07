@@ -1,30 +1,11 @@
-import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
-import config from "../config/config.json";
-import { Typography } from "../styles";
+import { View } from "react-native";
+import { IProduct } from "../interfaces/products";
+import TextParagraph from "./TextComponents/TextParagraph";
+import TextSubHeading from "./TextComponents/TextSubHeading";
 
-interface ISpecifier {
-  [key: string]: any;
-};
 
-interface IProduct {
-  id: number;
-  article_number: string;
-  name: string;
-  stock: number;
-  location: string;
-  price: number;
-  specifiers: ISpecifier[];
-};
-
-function StockList() {
-  const [products, setProducts] = useState<IProduct[]>([]);
-  useEffect(() => {
-    fetch(`${config.base_url}/products?api_key=${config.api_key}`)
-    .then(response => response.json())
-    .then(result => setProducts(result.data));
-  }, []);
-  const list = products.map((product, index) => <Text style={{color: "#fff", fontSize: 20}} key={index}>{ `${product.name} Stock:${product.stock}`}</Text>);
+function StockList({products}: {products: Array<IProduct>}) {
+  const list = products.map((product, index) => <TextParagraph key={index}>{product.name} Stock:{product.stock} id:{product.id}</TextParagraph>);
   return (
     <View>
       {list}
@@ -32,11 +13,11 @@ function StockList() {
   );
 }
 
-export default function Stock() {
+export default function Stock({products}: {products: Array<IProduct>}) {
   return (
     <View>
-      <Text style={Typography.paragraphBasic}>Lagerförteckning</Text>
-      <StockList></StockList>
+      <TextSubHeading>Lagerförteckning</TextSubHeading>
+      <StockList products={products}/>
     </View>
   );
 }
