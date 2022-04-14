@@ -7,7 +7,11 @@ const Stack = createNativeStackNavigator();
 export default function Pick({refreshInventory}:
   {refreshInventory: any}) {
     return (
-        <Stack.Navigator initialRouteName='List'>
+        <Stack.Navigator
+          initialRouteName='List'
+          screenOptions={{
+            headerShown: false
+          }}>
           <Stack.Screen name='List' component={OrderList} initialParams={{refreshInventory: refreshInventory}} />
           <Stack.Screen name='Details' component={PickList} />
         </Stack.Navigator>

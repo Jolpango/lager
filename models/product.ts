@@ -15,17 +15,21 @@ const productModel = {
     return result.data;
   },
   removeFromStock: async function (product: IOrderProduct) {
-    try {
-      const requestOptions = {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: product.product_id, name: product.name, stock: product.stock - product.amount, api_key: config.api_key })
-      };
-      const response = await fetch(`${config.base_url}/products`, requestOptions);
-      return response;
-    } catch(e) {
-      Alert.alert("Error", "An unexpected error occured: " + e)
-    }
+    const requestOptions = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: product.product_id, name: product.name, stock: product.stock - product.amount, api_key: config.api_key })
+    };
+    const response = await fetch(`${config.base_url}/products`, requestOptions);
+    return response;
+  },
+  setProductStock: async function (product_id: number, product_name: string, newStock: number) {
+    const requestOptions = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: product_id, name: product_name, stock: newStock, api_key: config.api_key })
+    };
+    const response = await fetch(`${config.base_url}/products`, requestOptions);
   }
 };
 
