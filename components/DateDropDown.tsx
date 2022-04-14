@@ -4,7 +4,7 @@ import { Platform, Button, View } from "react-native";
 import { Colors } from '../styles';
 
 export default function DateDropDown(props: any) {
-  const [dropDownDate, setDropDownDate] = useState<Date>(new Date(Date.now()));
+  const [dropDownDate, setDropDownDate] = useState<Date>(new Date());
   const [show, setShow] = useState<Boolean>(false);
 
   const showDatePicker = () => {
@@ -23,7 +23,7 @@ export default function DateDropDown(props: any) {
           onChange={(_event: any, value: any) => {
             if (value !== undefined) {
               setDropDownDate(value);
-              props.setCurrentDate(value.toLocaleDateString("se-SV"));
+              props.setCurrentDate(value.toLocaleDateString("sv-SE"));
             }
             setShow(false);
           }}

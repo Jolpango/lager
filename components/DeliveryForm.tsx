@@ -11,11 +11,18 @@ import deliveryModel from '../models/delivery';
 import DateDropDown from './DateDropDown';
 import productModel from '../models/product';
 
+function getFormattedDate(date: Date) {
+  let year = date.getFullYear() - 2000;
+  let month = (1 + date.getMonth()).toString().padStart(2, '0');
+  let day = date.getDate().toString().padStart(2, '0');
+  return month + '/' + day + '/' + year;
+}
+
 export default function DeliveryForm({route, navigation }: any) {
   const refreshInventory = route.params.refreshInventory;
   const refreshDeliveries = route.params.refreshDeliveries;
   const [currentProduct, setCurrentProduct] = useState<IProduct>();
-  const [currentDate, setCurrentDate] = useState<string>();
+  const [currentDate, setCurrentDate] = useState<string>(getFormattedDate(new Date()));
   const [delivery, setDelivery] = useState<Partial<IDelivery>>({})
   async function addDelivery() {
     if (currentProduct !== undefined && currentDate !== undefined) {
