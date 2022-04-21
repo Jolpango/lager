@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, View } from 'react-native';
+import { Button, ScrollView, View } from 'react-native';
 import { IDelivery } from '../interfaces/delivery';
 import deliveryModel from '../models/delivery';
 import { Colors } from "../styles/index";
@@ -16,7 +16,7 @@ export default function DeliveryList({ route, navigation }: any) {
     refreshDeliveries();
   }, [])
   return (
-    <View>
+    <ScrollView>
       <TextSubHeading>Inleveranser</TextSubHeading>
       <DeliveryListComponent deliveries={deliveries}/>
       <Button
@@ -26,7 +26,7 @@ export default function DeliveryList({ route, navigation }: any) {
             navigation.navigate('Form', {reload: true, refreshDeliveries: refreshDeliveries});
         }}
       />
-    </View>
+    </ScrollView>
   )
 }
 
