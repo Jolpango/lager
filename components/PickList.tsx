@@ -1,4 +1,4 @@
-import { View, Button, Alert } from "react-native";
+import { View, Button, Alert, ScrollView } from "react-native";
 import { Colors } from "../styles/index";
 import { IOrderProduct } from "../interfaces/orders";
 import orderModel from "../models/order";
@@ -27,13 +27,13 @@ export default function PickList({ route, navigation }: any) {
   });
 
   return (
-    <View>
+    <ScrollView style={{...Colors.darkBackgroundColor}}>
       <TextParagraph>{order.name}</TextParagraph>
       <TextParagraph>{order.address}</TextParagraph>
       <TextParagraph>{order.zip} {order.city}</TextParagraph>
       <TextParagraph>Produkter:</TextParagraph>
       {orderItemsList}
       <Button title="Plocka order" onPress={pick} color={Colors.secondaryAccentColor.backgroundColor} />
-    </View>
+    </ScrollView>
   )
 };

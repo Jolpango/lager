@@ -16,7 +16,7 @@ export default function DeliveryList({ route, navigation }: any) {
     refreshDeliveries();
   }, [])
   return (
-    <ScrollView>
+    <ScrollView style={{...Colors.darkBackgroundColor}}>
       <TextSubHeading>Inleveranser</TextSubHeading>
       <DeliveryListComponent deliveries={deliveries}/>
       <Button

@@ -1,7 +1,7 @@
-import React, { RefreshControl } from 'react-native';
-import { Text, Image, ScrollView, StyleSheet } from 'react-native';
+import React from 'react-native';
+import { Image, ScrollView, StyleSheet } from 'react-native';
 import Stock from "./Stock";
-import { Colors, Flex, Typography } from './../styles/index';
+import { Colors, Flex } from './../styles/index';
 import TextHeading from './TextComponents/TextHeading';
 import { IProduct } from '../interfaces/products';
 
@@ -20,8 +20,5 @@ const styles = StyleSheet.create({
   base: {
     ...Flex.flex,
     ...Colors.darkBackgroundColor
-  },
-  heading: {
-    ...Typography.mainHeading
   }
 });

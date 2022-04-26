@@ -9,7 +9,7 @@ export default function Stock({invoices}: {invoices: Array<IInvoice>}) {
     return (
       <DataTable.Row key={index}>
         <DataTable.Cell><TextSmall>{invoice.name}</TextSmall></DataTable.Cell>
-        <DataTable.Cell><TextSmall>{invoice.total_price}</TextSmall></DataTable.Cell>
+        <DataTable.Cell><TextSmall>{invoice.total_price} sek</TextSmall></DataTable.Cell>
         <DataTable.Cell><TextSmall>{invoice.due_date}</TextSmall></DataTable.Cell>
       </DataTable.Row>
     );

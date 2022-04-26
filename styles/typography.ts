@@ -4,7 +4,7 @@ export const mainHeading = {
     fontSize: 40,
     ...lightFontColor,
     textAlign: "center",
-    margin: 10
+    margin: 20
 }
 
 export const subHeading = {
@@ -16,5 +16,10 @@ export const subHeading = {
 
 export const paragraphBasic = {
     fontSize: 18,
+    ...lightFontColor
+}
+
+export const textSmall = {
+    fontSize: 14,
     ...lightFontColor
 }

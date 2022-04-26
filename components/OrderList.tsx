@@ -1,5 +1,5 @@
-import { View, Text, Button } from 'react-native'
-import { useEffect, useState } from 'react'
+import { View, Text, Button, ScrollView } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import config from "./../config/config.json";
 import { Colors, Typography } from '../styles';
 import { IOrder } from '../interfaces/orders';
@@ -37,9 +37,9 @@ export default function OrderList({ navigation, route }: Props) {
     });
 
   return (
-    <View>
+    <ScrollView style={{...Colors.darkBackgroundColor}}>
       <Text style={Typography.subHeading}>Ordrar redo att plockas</Text>
       {listOfOrders}
-    </View>
+    </ScrollView>
   );
 }

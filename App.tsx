@@ -1,17 +1,26 @@
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, TabActions } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Button, TouchableOpacity, View, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Flex, Colors } from './styles/index';
 import Home from "./components/Home";
 import Pick from "./components/Pick";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { DarkTheme } from 'react-native-paper';
-import { useEffect, useState } from 'react';
+import { DarkTheme, DefaultTheme } from 'react-native-paper';
+import React, { useEffect, useState } from 'react';
 import { IProduct } from './interfaces/products';
 import Deliveries from './components/Deliveries';
 import productModel from './models/product';
+import authModel from './models/auth';
+import Auth from './components/auth/Auth';
+import Invoices from './components/invoice/Invoices';
+import { primaryAccentColor } from './styles/colors';
+import TextParagraph from './components/TextComponents/TextParagraph';
+import storage from './models/storage';
+import orders from './models/order';
+import { IOrder } from './interfaces/orders';
+import InvoiceNav from './components/invoice/InvoiceNav';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,6 +31,8 @@ interface IStringByString {
 const iconNames: IStringByString = {
   "Lager": "business",
   "Plock": "list",
+  "Logga in": "person",
+  "Fakturor": "cash",
   "Leverans": "bus"
 }
 
@@ -33,6 +44,12 @@ export default function App() {
   }
   useEffect(() => {
     refreshInventory();
+  }, []);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  useEffect(() => {
+    (async () => {
+      setIsLoggedIn(await authModel.loggidIn());
+    })();
   }, []);
   return (
     <SafeAreaView style={styles.container}>
@@ -48,11 +65,37 @@ export default function App() {
             tabBarActiveBackgroundColor: Colors.darkBackgroundColor.backgroundColor,
             tabBarInactiveBackgroundColor: Colors.darkBackgroundColor.backgroundColor,
             tabBarStyle: styles.navigation,
-            headerStyle: styles.header
+            headerStyle: styles.header,
+            headerRight: () => {
+              if (isLoggedIn) {
+                return (
+                  <TouchableOpacity
+                    onPress={() => {
+                      Alert.alert("Logga ut", "Vill du logga ut?", [
+                        {text: "Ja", onPress: () => {
+                          setIsLoggedIn(false);
+                          storage.deleteToken();
+                        }},
+                        {text: "Nej"}
+                      ],
+                      {cancelable: true})
+                    }}
+                    style={{paddingRight: 20, flex: 1, flexDirection:"row", alignItems: "center"}}
+                  >
+                    <TextParagraph>Logga ut</TextParagraph>
+                    <Ionicons name="log-out" size={25} color={"#fff"}></Ionicons>
+                  </TouchableOpacity>
+                )
+              }
+          }
         })}>
           <Tab.Screen name="Lager" children={ () => <Home refreshInventory={refreshInventory} products={products}/> } />
+          {isLoggedIn ?
+            <Tab.Screen name="Fakturor" children={ () => <InvoiceNav setIsLoggedIn={setIsLoggedIn}/> } /> :
+            <Tab.Screen name="Logga in" children={ () => <Auth setIsLoggedIn={setIsLoggedIn}/> } />
+          }
           <Tab.Screen name="Leverans" children={ () => <Deliveries refreshInventory={refreshInventory}/> } />
-          <Tab.Screen name="Plock" children={ () => <Pick refreshInventory={refreshInventory}/> } />
+          <Tab.Screen name="Plock" children={ () => <Pick refreshInventory={refreshInventory} /> } />
         </Tab.Navigator>
       </NavigationContainer>
       <StatusBar style="light" backgroundColor={Colors.primaryAccentColor.backgroundColor}></StatusBar>

@@ -15,7 +15,7 @@ export const navigationDark = {
 }
 
 export const lightBackgroundColor = {
-    backgroundColor: "#eee"
+    backgroundColor: "#444"
 }
 
 export const primaryAccentColor = {
