@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Button, ScrollView, View } from 'react-native';
+import { DataTable } from 'react-native-paper';
 import { IDelivery } from '../interfaces/delivery';
 import deliveryModel from '../models/delivery';
 import { Colors } from "../styles/index";
+import TextHeading from './TextComponents/TextHeading';
 import TextParagraph from './TextComponents/TextParagraph';
+import TextSmall from './TextComponents/TextSmall';
 import TextSubHeading from './TextComponents/TextSubHeading';
 
 
@@ -17,8 +20,9 @@ export default function DeliveryList({ route, navigation }: any) {
   }, [])
   return (
     <ScrollView style={{...Colors.darkBackgroundColor}}>
-      <TextSubHeading>Inleveranser</TextSubHeading>
+      <TextHeading>Inleveranser</TextHeading>
       <DeliveryListComponent deliveries={deliveries}/>
+      <View style={{paddingVertical: 10}}></View>
       <Button
         title="Ny inleverans"
         color={Colors.secondaryAccentColor.backgroundColor}
@@ -26,17 +30,33 @@ export default function DeliveryList({ route, navigation }: any) {
             navigation.navigate('Form', {reload: true, refreshDeliveries: refreshDeliveries});
         }}
       />
+      <View style={{paddingVertical: 20}}></View>
     </ScrollView>
   )
 }
 
 function DeliveryListComponent({deliveries}: {deliveries: Array<IDelivery>}) {
   if (deliveries.length > 0) {
-    const list = deliveries.map((delivery, index: number) => <TextParagraph key={index}>{delivery.id}: {delivery.product_name} Amount:{delivery.amount} {delivery.delivery_date}</TextParagraph>);
+    const list = deliveries.map((delivery, index: number) => {
+      return (
+        <DataTable.Row key={index}>
+          <DataTable.Cell><TextSmall>{delivery.id}</TextSmall></DataTable.Cell>
+          <DataTable.Cell><TextSmall>{delivery.product_name}</TextSmall></DataTable.Cell>
+          <DataTable.Cell><TextSmall>{delivery.amount}</TextSmall></DataTable.Cell>
+          <DataTable.Cell><TextSmall>{delivery.delivery_date}</TextSmall></DataTable.Cell>
+        </DataTable.Row>
+      )
+    });
     return (
-      <View>
+      <DataTable>
+        <DataTable.Header>
+        <DataTable.Title><TextParagraph>ID</TextParagraph></DataTable.Title>
+        <DataTable.Title><TextParagraph>Produkt</TextParagraph></DataTable.Title>
+        <DataTable.Title><TextParagraph>Antal</TextParagraph></DataTable.Title>
+        <DataTable.Title><TextParagraph>Datum</TextParagraph></DataTable.Title>
+        </DataTable.Header>
         {list}
-      </View>
+      </DataTable>
     );
   } else {
     return (
