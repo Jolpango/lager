@@ -30,7 +30,7 @@ export default function DeliveryList({ route, navigation }: any) {
             navigation.navigate('Form', {reload: true, refreshDeliveries: refreshDeliveries});
         }}
       />
-      <View style={{paddingVertical: 20}}></View>
+      <View style={{paddingVertical: 10}}></View>
     </ScrollView>
   )
 }
