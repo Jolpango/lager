@@ -33,7 +33,7 @@ const invoiceModel = {
     };
     const response = await fetch(`${config.base_url}/invoices`, requestOptions);
     const result = response.json();
-    // await orders.setOrderStatus(order, 600);
+    await orders.setOrderStatus(order, 600);
     return result;
   }
 };

@@ -31,7 +31,7 @@ export default function NewInvoice({ navigation, route }: any) {
     })();
   }, []);
   const pickerList = orders.filter((order: IOrder) => {
-    return order.status === "Packad" || "Skickad";
+    return order.status === "Packad" || order.status ===  "Skickad";
   }).map((order: IOrder, index: number) => {
     return <Picker.Item key={index} label={`${order.id} ${order.name}`} value={order} style={{...Typography.paragraphBasic, ...Colors.lightBackgroundColor}} />
   });
