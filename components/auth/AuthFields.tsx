@@ -1,4 +1,4 @@
-import { View, TextInput, Button } from 'react-native'
+import { View, TextInput, Button, StyleSheet } from 'react-native'
 import React from 'react'
 import IAuth from '../../interfaces/auth'
 import TextHeading from '../TextComponents/TextHeading'
@@ -20,7 +20,7 @@ export default function AuthFields({auth, setAuth, title, submit, navigation}: p
       <TextSubHeading>Email</TextSubHeading>
       <TextInput
         autoCapitalize="none"
-        style={{borderRadius: 5, borderWidth: 1, borderColor: "#555", fontSize: 20, color:"#fff", backgroundColor:"#333", padding:10, marginBottom:30}}
+        style={styles.textInput}
         onChangeText={(content: string) => {
           setAuth({...auth, email: content});
         }}
@@ -32,7 +32,7 @@ export default function AuthFields({auth, setAuth, title, submit, navigation}: p
       <TextInput
       autoCapitalize="none"
       autoCompleteType="password"
-        style={{borderRadius: 5, borderWidth: 1, borderColor: "#555", fontSize: 20, color:"#fff", backgroundColor:"#333", padding:10, marginBottom:30}}
+        style={styles.textInput}
         onChangeText={(content: string) => {
           setAuth({...auth, password: content});
         }}
@@ -60,3 +60,15 @@ export default function AuthFields({auth, setAuth, title, submit, navigation}: p
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  textInput: {
+    borderRadius: 3,
+    borderWidth: 1,
+    borderColor: "#555",
+    fontSize: 20, color:"#fff",
+    backgroundColor:"#333",
+    padding:10,
+    marginBottom:30
+  }
+});
