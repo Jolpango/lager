@@ -7,14 +7,14 @@ import { DataTable } from "react-native-paper";
 import TextSmall from "./TextComponents/TextSmall";
 import TextSubHeading from "./TextComponents/TextSubHeading";
 
-export default function PickList({ route, navigation }: any) {
-  const { order, refreshInventory, refreshOrders } = route.params;
+export default function PickList({ route, navigation, refreshInventory, setOrders }: any) {
+  const { order } = route.params;
 
   async function pick() {
     const success = await orderModel.pickOrder(order);
     if (success) {
       await refreshInventory();
-      await refreshOrders();
+      setOrders(await orderModel.getOrders());
       navigation.navigate("List", {reload: true});
     } else {
       Alert.alert("Error", "Ordern kan inte plockas");

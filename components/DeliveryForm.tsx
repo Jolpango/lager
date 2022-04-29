@@ -18,9 +18,7 @@ function getFormattedDate(date: Date) {
   return month + '/' + day + '/' + year;
 }
 
-export default function DeliveryForm({route, navigation }: any) {
-  const refreshInventory = route.params.refreshInventory;
-  const refreshDeliveries = route.params.refreshDeliveries;
+export default function DeliveryForm({route, navigation, refreshDeliveries, refreshInventory }: any) {
   const [currentProduct, setCurrentProduct] = useState<IProduct>();
   const [currentDate, setCurrentDate] = useState<string>(getFormattedDate(new Date()));
   const [delivery, setDelivery] = useState<Partial<IDelivery>>({})

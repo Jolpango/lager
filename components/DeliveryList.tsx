@@ -10,14 +10,8 @@ import TextSmall from './TextComponents/TextSmall';
 import TextSubHeading from './TextComponents/TextSubHeading';
 
 
-export default function DeliveryList({ route, navigation }: any) {
-  const [deliveries, setDeliveries] = useState<IDelivery[]>([]);
-  const refreshDeliveries = async () => {
-    setDeliveries(await deliveryModel.getDeliveries());
-  }
-  useEffect(() => {
-    refreshDeliveries();
-  }, [])
+export default function DeliveryList({ route, navigation, deliveries }: any) {
+
   return (
     <ScrollView style={{...Colors.darkBackgroundColor}}>
       <TextHeading>Inleveranser</TextHeading>
@@ -27,7 +21,7 @@ export default function DeliveryList({ route, navigation }: any) {
         title="Ny inleverans"
         color={Colors.secondaryAccentColor.backgroundColor}
         onPress={() => {
-            navigation.navigate('Form', {reload: true, refreshDeliveries: refreshDeliveries});
+            navigation.navigate('Form', {reload: true});
         }}
       />
       <View style={{paddingVertical: 10}}></View>

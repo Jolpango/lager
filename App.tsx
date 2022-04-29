@@ -18,9 +18,12 @@ import Invoices from './components/invoice/Invoices';
 import { primaryAccentColor } from './styles/colors';
 import TextParagraph from './components/TextComponents/TextParagraph';
 import storage from './models/storage';
-import orders from './models/order';
+import orderModel from './models/order';
 import { IOrder } from './interfaces/orders';
 import InvoiceNav from './components/invoice/InvoiceNav';
+import ShippingNav from './components/shipping/ShippingNav';
+import invoiceModel from './models/invoice';
+import { IInvoice } from './interfaces/invoice';
 
 const Tab = createBottomTabNavigator();
 
@@ -33,7 +36,8 @@ const iconNames: IStringByString = {
   "Plock": "list",
   "Logga in": "person",
   "Fakturor": "cash",
-  "Leverans": "bus"
+  "Leverans": "bus",
+  "Skicka": "map"
 }
 
 export default function App() {
@@ -42,13 +46,25 @@ export default function App() {
     const p = await productModel.getProducts();
     setProducts(p);
   }
-  useEffect(() => {
-    refreshInventory();
-  }, []);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   useEffect(() => {
     (async () => {
       setIsLoggedIn(await authModel.loggidIn());
+    })();
+  }, []);
+  const [orders, setOrders] = useState<IOrder[]>([]);
+  const refreshOrders = async () => {
+    const o = await orderModel.getOrders();
+    setOrders(o as IProduct[]);
+  };
+  useEffect(() => {
+    refreshOrders();
+    refreshInventory();
+  }, []);
+  const [invoices, setInvoices] = useState<IInvoice[]>([]);
+  useEffect(() => {
+    (async () => {
+      setInvoices(await invoiceModel.getInvoices());
     })();
   }, []);
   return (
@@ -91,11 +107,12 @@ export default function App() {
         })}>
           <Tab.Screen name="Lager" children={ () => <Home refreshInventory={refreshInventory} products={products}/> } />
           {isLoggedIn ?
-            <Tab.Screen name="Fakturor" children={ () => <InvoiceNav setIsLoggedIn={setIsLoggedIn}/> } /> :
+            <Tab.Screen name="Fakturor" children={ () => <InvoiceNav orders={orders} setOrders={setOrders} invoices={invoices} setInvoices={setInvoices}/> } /> :
             <Tab.Screen name="Logga in" children={ () => <Auth setIsLoggedIn={setIsLoggedIn}/> } />
           }
           <Tab.Screen name="Leverans" children={ () => <Deliveries refreshInventory={refreshInventory}/> } />
-          <Tab.Screen name="Plock" children={ () => <Pick refreshInventory={refreshInventory} /> } />
+          <Tab.Screen name="Plock" children={ () => <Pick refreshInventory={refreshInventory} orders={orders} setOrders={setOrders} /> } />
+          <Tab.Screen name="Skicka" children={ () => <ShippingNav orders={orders} setOrders={setOrders} /> }></Tab.Screen>
         </Tab.Navigator>
       </NavigationContainer>
       <StatusBar style="light" backgroundColor={Colors.primaryAccentColor.backgroundColor}></StatusBar>

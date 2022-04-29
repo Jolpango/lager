@@ -1,4 +1,4 @@
-import { View, TextInput, Button, StyleSheet } from 'react-native'
+import { View, TextInput, Button, StyleSheet, ScrollView } from 'react-native'
 import React from 'react'
 import IAuth from '../../interfaces/auth'
 import TextHeading from '../TextComponents/TextHeading'
@@ -15,7 +15,7 @@ interface props {
 
 export default function AuthFields({auth, setAuth, title, submit, navigation}: props) {
   return (
-    <View style={{padding:15}}>
+    <ScrollView style={{padding:15, ...Colors.darkBackgroundColor}}>
       <TextHeading>{title}</TextHeading>
       <TextSubHeading>Email</TextSubHeading>
       <TextInput
@@ -57,7 +57,7 @@ export default function AuthFields({auth, setAuth, title, submit, navigation}: p
           />
         </View>
       }
-    </View>
+    </ScrollView>
   )
 }
 

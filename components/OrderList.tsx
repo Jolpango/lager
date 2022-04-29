@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import config from "./../config/config.json";
 import { Colors, Typography } from '../styles';
 import { IOrder } from '../interfaces/orders';
-import orders from '../models/order';
+import orderModel from '../models/order';
 import TextHeading from './TextComponents/TextHeading';
 import TextSubHeading from './TextComponents/TextSubHeading';
 import { DataTable } from 'react-native-paper';
@@ -12,19 +12,12 @@ import TextParagraph from './TextComponents/TextParagraph';
 
 type Props = {
   navigation: any,
-  route: any
+  route: any,
+  orders: IOrder[],
 };
 
-export default function OrderList({ navigation, route }: Props) {
-  const [allOrders, setAllOrders] = useState<Partial<IOrder>[]>([]);
-  const refreshOrders = async () => {
-    const o = await orders.getOrders();
-    setAllOrders(o);
-  }
-  useEffect(() => {
-    refreshOrders()
-  }, [])
-  const listOfOrders = allOrders
+export default function OrderList({ navigation, route, orders }: Props) {
+  const listOfOrders = orders
     .filter((order: any) => order.status === "Ny")
     .map((order: any, index: number) => {
       return (
@@ -37,9 +30,7 @@ export default function OrderList({ navigation, route }: Props) {
               title="Detaljer"
               onPress={() => {
                 navigation.navigate('Details', {
-                  order: order,
-                  refreshInventory: route.params.refreshInventory,
-                  refreshOrders: refreshOrders
+                  order: order
                 });
               }}
             />

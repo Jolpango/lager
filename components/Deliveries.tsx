@@ -9,13 +9,25 @@ import deliveryModel from '../models/delivery';
 const Stack = createNativeStackNavigator();
 
 export default function Deliveries({refreshInventory}: {refreshInventory: any}) {
+  const [deliveries, setDeliveries] = useState<IDelivery[]>([]);
+  const refreshDeliveries = async () => {
+    setDeliveries(await deliveryModel.getDeliveries());
+  }
+  
+  useEffect(() => {
+    refreshDeliveries();
+  }, [])
   return (
     <Stack.Navigator
       initialRouteName="List"
       screenOptions={{headerShown: false}}
     >
-      <Stack.Screen name="List" component={DeliveryList}/>
-      <Stack.Screen name="Form" component={DeliveryForm} initialParams={{refreshInventory: refreshInventory}}/>
+      <Stack.Screen name="List">
+        {(screenProps) => <DeliveryList {...screenProps} deliveries={deliveries} setDeliveries={setDeliveries}/>}
+      </Stack.Screen>
+      <Stack.Screen name="Form">
+        {(screenProps) => <DeliveryForm {...screenProps} refreshDeliveries={refreshDeliveries} refreshInventory={refreshInventory} />}
+      </Stack.Screen>
     </Stack.Navigator>
   )
 }

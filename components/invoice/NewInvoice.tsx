@@ -15,23 +15,26 @@ function getFormattedDate(date: Date) {
   return month + '/' + day + '/' + year;
 }
 
-export default function NewInvoice({ navigation, route }: any) {
-  const [orders, setOrders] = useState<IOrder[]>([]);
+export default function NewInvoice({ navigation, route, orders, setOrders, setInvoices }: any) {
   const [currentOrder, setCurrentOrder] = useState<IOrder>();
   const month = 1000 * 60 * 60 * 24 * 30;
   const creation_date = getFormattedDate(new Date());
   const due_date = getFormattedDate(new Date(new Date().getTime() + month));
   async function createInvoice(order: IOrder) {
     await invoiceModel.createInvoice(order, creation_date, due_date);
-    await route.params.reloadInvoices();
+    setInvoices(await invoiceModel.getInvoices());
+    setOrders(await orderModel.getOrders());
   }
   useEffect(() => {
     (async () => {
       setOrders(await orderModel.getOrders() as IOrder[]);
+      if (orders) {
+        setCurrentOrder(orders.filter((order: IOrder) => order.status === "Skickad")[0])
+      }
     })();
   }, []);
   const pickerList = orders.filter((order: IOrder) => {
-    return order.status === "Packad" || order.status ===  "Skickad";
+    return order.status ===  "Skickad";
   }).map((order: IOrder, index: number) => {
     return <Picker.Item key={index} label={`${order.id} ${order.name}`} value={order} style={{...Typography.paragraphBasic, ...Colors.lightBackgroundColor}} />
   });
