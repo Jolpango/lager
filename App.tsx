@@ -24,6 +24,7 @@ import InvoiceNav from './components/invoice/InvoiceNav';
 import ShippingNav from './components/shipping/ShippingNav';
 import invoiceModel from './models/invoice';
 import { IInvoice } from './interfaces/invoice';
+import FlashMessage, { showMessage } from 'react-native-flash-message';
 
 const Tab = createBottomTabNavigator();
 
@@ -34,7 +35,7 @@ interface IStringByString {
 const iconNames: IStringByString = {
   "Lager": "business",
   "Plock": "list",
-  "Logga in": "person",
+  "Användare": "person",
   "Fakturor": "cash",
   "Leverans": "bus",
   "Skicka": "map"
@@ -91,6 +92,11 @@ export default function App() {
                         {text: "Ja", onPress: () => {
                           setIsLoggedIn(false);
                           storage.deleteToken();
+                          showMessage({
+                            message: "Utloggad",
+                            description: "Du är nu utloggad",
+                            type: "danger"
+                          });
                         }},
                         {text: "Nej"}
                       ],
@@ -108,7 +114,7 @@ export default function App() {
           <Tab.Screen name="Lager" children={ () => <Home refreshInventory={refreshInventory} products={products}/> } />
           {isLoggedIn ?
             <Tab.Screen name="Fakturor" children={ () => <InvoiceNav orders={orders} setOrders={setOrders} invoices={invoices} setInvoices={setInvoices}/> } /> :
-            <Tab.Screen name="Logga in" children={ () => <Auth setIsLoggedIn={setIsLoggedIn}/> } />
+            <Tab.Screen name="Användare" children={ () => <Auth setIsLoggedIn={setIsLoggedIn}/> } />
           }
           <Tab.Screen name="Leverans" children={ () => <Deliveries refreshInventory={refreshInventory}/> } />
           <Tab.Screen name="Plock" children={ () => <Pick refreshInventory={refreshInventory} orders={orders} setOrders={setOrders} /> } />
@@ -116,6 +122,7 @@ export default function App() {
         </Tab.Navigator>
       </NavigationContainer>
       <StatusBar style="light" backgroundColor={Colors.primaryAccentColor.backgroundColor}></StatusBar>
+      <FlashMessage position={{top: 30, left: 0, right: 0}}/>
     </SafeAreaView>
   );
 }

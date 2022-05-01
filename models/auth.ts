@@ -1,3 +1,4 @@
+import { MessageOptions } from "react-native-flash-message";
 import config from "../config/config.json";
 import storage from "./storage";
 
@@ -8,7 +9,7 @@ const authModel = {
         const notExpired = (new Date().getTime() - tokenData.date) < twentyFourHours;
         return tokenData.token && notExpired;
     },
-    login: async function (email: string, password: string) {
+    login: async function (email: string, password: string): Promise<MessageOptions> {
         const data = {
             api_key: config.api_key,
             email: email,
@@ -22,13 +23,21 @@ const authModel = {
             }
         });
         const result = await response.json();
-        if(result.errors) {
-            return false;
+        if (Object.prototype.hasOwnProperty.call(result, 'errors')) {
+            return {
+                message: result.errors.title,
+                description: result.errors.detail,
+                type: "danger",
+            };
         }
         await storage.storeToken(result.data.token);
-        return true;
+        return {
+            message: "Inloggning",
+            description: result.data.message,
+            type: "success",
+        };
     },
-    register: async function(email: string, password: string) {
+    register: async function(email: string, password: string): Promise<MessageOptions> {
         const data = {
             api_key: config.api_key,
             email: email,
@@ -41,7 +50,19 @@ const authModel = {
                 "content-type": "application/json"
             }
         });
-        return await response.json();
+        const result = await response.json();
+        if (Object.prototype.hasOwnProperty.call(result, 'errors')) {
+            return {
+                message: result.errors.title,
+                description: result.errors.detail,
+                type: "danger",
+            };
+        }
+        return {
+            message: "Registrering",
+            description: result.data.message,
+            type: "success",
+        };
     }
 };
 

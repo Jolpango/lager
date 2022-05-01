@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import IAuth from "../../interfaces/auth";
 import authModel from '../../models/auth';
 import AuthFields from './AuthFields';
+import { showMessage } from 'react-native-flash-message';
 
 
 interface props {
@@ -15,16 +16,19 @@ export default function Login({navigation, setIsLoggedIn}: props) {
   async function doLogin() {
     if (auth.password && auth.email) {
       const result = await authModel.login(auth.email, auth.password);
-      if(!result) {
-        Alert.alert("Fel", "Fel användarnamn eller lösenord")
+      if (result.type === "success") {
+        setIsLoggedIn(true);
       }
-      setIsLoggedIn(result);
+      showMessage(result);
     } else {
-      Alert.alert("Ange email och lösenord", "Ange email och lösenord");
+      showMessage({
+        message: "Saknas",
+        description: "Email och/eller lösenord saknas",
+        type: "warning"
+      });
     }
   }
   return (
-    <AuthFields auth={auth} setAuth={setAuth} submit={doLogin} title="Logga in" navigation={navigation}>
-    </AuthFields>
+    <AuthFields auth={auth} setAuth={setAuth} submit={doLogin} title="Logga in" navigation={navigation}/>
   )
 }

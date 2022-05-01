@@ -1,4 +1,3 @@
-import { View } from "react-native";
 import { DataTable } from "react-native-paper";
 import { IProduct } from "../interfaces/products";
 import TextParagraph from "./TextComponents/TextParagraph";

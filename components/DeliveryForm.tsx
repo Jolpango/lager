@@ -10,6 +10,7 @@ import { IProduct } from '../interfaces/products';
 import deliveryModel from '../models/delivery';
 import DateDropDown from './DateDropDown';
 import productModel from '../models/product';
+import { showMessage } from 'react-native-flash-message';
 
 function getFormattedDate(date: Date) {
   let year = date.getFullYear() - 2000;
@@ -30,11 +31,24 @@ export default function DeliveryForm({route, navigation, refreshDeliveries, refr
         delivery_date: currentDate,
         product_id: currentProduct.id
       }
-      await deliveryModel.addDelivery(newDeliveryObjectCauseFuckThis);
-      await productModel.setProductStock(currentProduct.id, currentProduct.name, (currentProduct.stock ?? 0) + (delivery.amount ?? 0));
-      await refreshInventory();
-      await refreshDeliveries();
-      navigation.navigate("List", { reload: true })
+      if(newDeliveryObjectCauseFuckThis.amount && newDeliveryObjectCauseFuckThis.amount > 0) {
+        await deliveryModel.addDelivery(newDeliveryObjectCauseFuckThis);
+        await productModel.setProductStock(currentProduct.id, currentProduct.name, (currentProduct.stock ?? 0) + (delivery.amount ?? 0));
+        await refreshInventory();
+        await refreshDeliveries();
+        showMessage({
+          message: "Inleverans",
+          description: "Ny inleverans gjord",
+          type: "success"
+        })
+        navigation.navigate("List", { reload: true })
+      } else {
+        showMessage({
+          message: "Fel",
+          description: "Antalat måste vara större än 0",
+          type: "warning"
+        })
+      }
     }
   }
   return (

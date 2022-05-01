@@ -12,10 +12,10 @@ const Stack = createNativeStackNavigator();
 export default function Auth({setIsLoggedIn}: props) {
   return (
     <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown:false}}>
-      <Stack.Screen name="Login">
+      <Stack.Screen name="Logga in">
         {(screenProps) => <Login {...screenProps} setIsLoggedIn={setIsLoggedIn}></Login>}
       </Stack.Screen>
-      <Stack.Screen name="Register" component={Register}></Stack.Screen>
+      <Stack.Screen name="Registrera" component={Register}></Stack.Screen>
     </Stack.Navigator>
   )
 }

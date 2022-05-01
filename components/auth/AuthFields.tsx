@@ -52,7 +52,7 @@ export default function AuthFields({auth, setAuth, title, submit, navigation}: p
             title="Registrera"
             color={Colors.primaryAccentColor.backgroundColor}
             onPress={() => {
-              navigation.navigate("Register");
+              navigation.navigate("Registrera");
             }}
           />
         </View>
