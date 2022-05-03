@@ -23,6 +23,7 @@ export default function OrderList({ navigation, route, orders }: Props) {
       return (
         <DataTable.Row key={index}>
           <DataTable.Cell><TextSmall>{order.id}</TextSmall></DataTable.Cell>
+          <DataTable.Cell><TextSmall>{order.status}</TextSmall></DataTable.Cell>
           <DataTable.Cell><TextSmall>{order.name}</TextSmall></DataTable.Cell>
           <DataTable.Cell>
             <Button
@@ -45,6 +46,7 @@ export default function OrderList({ navigation, route, orders }: Props) {
       <DataTable>
         <DataTable.Header>
         <DataTable.Title><TextParagraph>ID</TextParagraph></DataTable.Title>
+        <DataTable.Title><TextParagraph>Status</TextParagraph></DataTable.Title>
         <DataTable.Title><TextParagraph>Namn</TextParagraph></DataTable.Title>
         <DataTable.Title><TextParagraph>Detaljer</TextParagraph></DataTable.Title>
         </DataTable.Header>

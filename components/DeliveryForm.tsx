@@ -52,7 +52,7 @@ export default function DeliveryForm({route, navigation, refreshDeliveries, refr
     }
   }
   return (
-    <ScrollView>
+    <ScrollView style={{...Colors.darkBackgroundColor}}>
       <TextSubHeading>Ny inleverans</TextSubHeading>
       <TextParagraph>Product</TextParagraph>
       <ProductDropDown
@@ -103,12 +103,12 @@ export default function DeliveryForm({route, navigation, refreshDeliveries, refr
 
 export const styles = StyleSheet.create({
   input: {
-    ...Colors.darkBackgroundColor,
-    ...Colors.lightFontColor,
-    padding: 10,
-    ...Typography.paragraphBasic,
-    margin: 5,
+    borderRadius: 3,
     borderWidth: 1,
-    borderColor: "#333"
+    borderColor: "#555",
+    fontSize: 20, color:"#fff",
+    backgroundColor:"#333",
+    padding:10,
+    marginBottom:30
   }
 });

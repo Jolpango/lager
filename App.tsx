@@ -1,21 +1,19 @@
-import { NavigationContainer, TabActions } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
-import { StyleSheet, Button, TouchableOpacity, View, Alert } from 'react-native';
+import { StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Flex, Colors } from './styles/index';
 import Home from "./components/Home";
 import Pick from "./components/Pick";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { DarkTheme, DefaultTheme } from 'react-native-paper';
+import { DarkTheme } from 'react-native-paper';
 import React, { useEffect, useState } from 'react';
 import { IProduct } from './interfaces/products';
 import Deliveries from './components/Deliveries';
 import productModel from './models/product';
 import authModel from './models/auth';
 import Auth from './components/auth/Auth';
-import Invoices from './components/invoice/Invoices';
-import { primaryAccentColor } from './styles/colors';
 import TextParagraph from './components/TextComponents/TextParagraph';
 import storage from './models/storage';
 import orderModel from './models/order';
@@ -38,7 +36,7 @@ const iconNames: IStringByString = {
   "Användare": "person",
   "Fakturor": "cash",
   "Leverans": "bus",
-  "Skicka": "map"
+  "Skicka": "send"
 }
 
 export default function App() {

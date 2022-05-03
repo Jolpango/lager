@@ -1,4 +1,4 @@
-import { RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, Button } from 'react-native';
+import { RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, Button, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react'
 import { IOrder } from '../../interfaces/orders';
 import orderModel from "../../models/order";
@@ -8,6 +8,7 @@ import { Colors } from '../../styles';
 import TextParagraph from '../TextComponents/TextParagraph';
 import TextHeading from '../TextComponents/TextHeading';
 import TextSubHeading from '../TextComponents/TextSubHeading';
+import { Ionicons } from '@expo/vector-icons';
 
 interface props {
   navigation: any,
@@ -33,16 +34,17 @@ export default function ShippingList({navigation, route, orders, setOrders}: pro
     return (
       <DataTable.Row key={index}>
         <DataTable.Cell><TextSmall>{order.id}</TextSmall></DataTable.Cell>
+        <DataTable.Cell><TextSmall>{order.status}</TextSmall></DataTable.Cell>
         <DataTable.Cell><TextSmall>{order.name}</TextSmall></DataTable.Cell>
         <DataTable.Cell><TextSmall>{order.city}</TextSmall></DataTable.Cell>
         <DataTable.Cell>
-          <Button
-            title="Detaljer"
-            color={Colors.primaryAccentColor.backgroundColor}
+          <TouchableOpacity style={{...Colors.primaryAccentColor, padding: 10, borderRadius: 10, margin: 10}}
             onPress={() => {
               navigation.navigate("ShippingDetails", {reload: true, order: order})
             }}
-          />
+          >
+            <Ionicons name="send" size={20} color="#fff"/>
+          </TouchableOpacity>
         </DataTable.Cell>
       </DataTable.Row>
     )
@@ -61,9 +63,10 @@ export default function ShippingList({navigation, route, orders, setOrders}: pro
       <DataTable>
         <DataTable.Header>
           <DataTable.Title><TextParagraph>ID</TextParagraph></DataTable.Title>
+          <DataTable.Title><TextParagraph>Status</TextParagraph></DataTable.Title>
           <DataTable.Title><TextParagraph>Namn</TextParagraph></DataTable.Title>
           <DataTable.Title><TextParagraph>Stad</TextParagraph></DataTable.Title>
-          <DataTable.Title><TextParagraph>Detaljer</TextParagraph></DataTable.Title>
+          <DataTable.Title><TextParagraph>Visa</TextParagraph></DataTable.Title>
         </DataTable.Header>
         {orderRows}
       </DataTable>
