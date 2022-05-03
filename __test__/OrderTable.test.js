@@ -3,7 +3,7 @@ import OrderTable from '../components/OrderTable';
 jest.useFakeTimers();
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 
-test('Expect ShippingList to only print orders with "Packad" as status', async () => {
+test('Expect OrderTable to print order information correctly ', async () => {
     const order = {
         id: 1,
         name: "TestName",
