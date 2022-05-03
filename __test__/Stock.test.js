@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react-native';
 import Stock from '../components/Stock';
-
-// jest.mock("../components/Stock", () => "Stock");
+jest.useFakeTimers();
+jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 
 const products = [
     { name: "Shampoo", stock: 2 },

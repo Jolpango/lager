@@ -63,6 +63,14 @@ const authModel = {
             description: result.data.message,
             type: "success",
         };
+    },
+    isValidEmail: function (email: string): boolean {
+        const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return email.match(pattern) !== null;
+    },
+    isValidPassword: function (password: string): boolean {
+        const pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+        return password.match(pattern) !== null;
     }
 };
 

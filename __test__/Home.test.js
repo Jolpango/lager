@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react-native';
 import Home from '../components/Home';
-
+jest.useFakeTimers();
+jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 jest.mock("../components/Stock", () => "Stock");
 
 test('header should exist containing text "Skruvat Lager"', async () => {

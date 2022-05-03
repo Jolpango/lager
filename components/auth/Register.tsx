@@ -12,12 +12,18 @@ interface props {
 export default function Register({ navigation }: props) {
   const [auth, setAuth] = useState<Partial<IAuth>>({});
   async function doRegister() {
-    if (auth.email && auth.password) {
+    if (auth.email && auth.password && authModel.isValidEmail(auth.email) && authModel.isValidPassword(auth.password)) {
       const result = await authModel.register(auth.email, auth.password);
       showMessage(result);
       if(result.type === "success") {
         navigation.navigate("Logga in")
       }
+    } else {
+      showMessage({
+        message: "Fel vid registrering",
+        description: "Ange en riktig email och ett starkt lösenord",
+        type: "danger"
+      })
     }
   }
   return (

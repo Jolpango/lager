@@ -11,7 +11,6 @@ import TextSubHeading from './TextComponents/TextSubHeading';
 
 
 export default function DeliveryList({ route, navigation, deliveries }: any) {
-
   return (
     <ScrollView style={{...Colors.darkBackgroundColor}}>
       <TextHeading>Inleveranser</TextHeading>
